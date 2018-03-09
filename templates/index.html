@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+this is the store page.
+I got items: {{items}}
+
+    {% for item in items %}
+    <div><H1>{{ item.title }}</H1>  {{ item.price }}</div>
+    {% endfor %}
+
+</body>
+</html>
