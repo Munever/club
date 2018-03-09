@@ -1,15 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-</head>
-<body>
-this is the store page.
-I got items: {{items}}
+{% extends "base.html" %}
 
-    {% for item in items %}
-    <div><H1>{{ item.title }}</H1>  {{ item.price }}</div>
+{% block content %}
+    <h1>Hello, {{user.username}}!</h1>
+
+    {% for post in posts %}
+    <div><H1>{{ post.title.main }}</H1>  {{ post.body }}</div>
     {% endfor %}
-
-</body>
-</html>
+{% endblock %}
