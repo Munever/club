@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for
 from application.forms import LoginForm
 from application.models import User, Post
 from application import app
-from flask_login import logout_user, login_user
+from flask_login import logout_user, login_user, current_user
 
 @app.route('/')
 @app.route('/index')
@@ -32,6 +32,9 @@ def store():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+     return redirect(url_for('index'))
+
     form = LoginForm()
     if form.validate_on_submit():
         flash('Login requested for user {}, remember_me={}'.format(form.username.data, form.remember_me.data))
@@ -47,6 +50,8 @@ def login():
 
     return render_template('login.html', title='Sign In', form=form)
 
-
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+   pass
 
 
