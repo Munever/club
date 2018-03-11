@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for
-from application.forms import LoginForm
+from application.forms import LoginForm, RegistrationForm
 from application.models import User, Post
-from application import app
+from application import app, db
 from flask_login import logout_user, login_user, current_user
 
 @app.route('/')
@@ -52,6 +52,17 @@ def login():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-   pass
+    if current_user.is_authenticated:
+        return "You have been registered"
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data,email = form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations, you are now a registered user!')
+        return redirect(url_for('login'))
+
+    return render_template('signup.html', title='Register', form = form)
 
 
